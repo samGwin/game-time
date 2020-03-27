@@ -1,0 +1,9 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .login-container div {
+      text-align: center;
+  }
