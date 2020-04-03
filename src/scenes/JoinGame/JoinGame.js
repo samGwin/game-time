@@ -1,31 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import './JoinList.css';
+import './JoinGame.css';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import * as FirestoreService from '../../services/firestore';
 
-function JoinList(props) {
+function JoinGame(props) {
 
-    const { onSelectGame, onCloseGameList, userName, userId } = props;
+    const { onSelectGame, onCloseGames, userName, userId } = props;
 
     const [ error, setError ] = useState();
-    const [ gameList, setGameList ] = useState();
+    const [ games, setGames ] = useState();
 
     useEffect(() => {
-        const unsubscribe = FirestoreService.streamGameList({
+        const unsubscribe = FirestoreService.streamGames({
             next: querySnapshot => {
-                const updatedGameList = 
+                const updatedGames = 
                     querySnapshot.docs.map(docSnapshot => docSnapshot.data());
-                setGameList(updatedGameList);
+                setGames(updatedGames);
             },
             error: () => setError('grocery-list-item-get-fail')
         });
         return unsubscribe;
-    }, [gameList, setGameList]);
+    }, [games, setGames]);
     
     function getGameButtonList() {
-        console.log('gameList', gameList[0].name);
+        console.log('games', games[0].name);
 
-        const buttonList = gameList.map(game => <button key={game.id} onClick={joinGame}>{game.name}</button>);
+        const buttonList = games.map(game => <button key={game.id} onClick={joinGame}>{game.name}</button>);
         return <div className="button-group">{buttonList}</div>;
     }
 
@@ -41,9 +41,9 @@ function JoinList(props) {
 
     function onCreateGameClick(e) {
         e.preventDefault();
-        onCloseGameList();
+        onCloseGames();
     }
-    if(gameList) {
+    if(games) {
         return (
             <div>
                 <div className="join-container">
@@ -61,4 +61,4 @@ function JoinList(props) {
     } else return null;
 }
 
-export default JoinList;
+export default JoinGame;

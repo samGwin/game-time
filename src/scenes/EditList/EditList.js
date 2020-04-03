@@ -7,7 +7,7 @@ function EditList(props) {
 
     const { groceryListId, user, onCloseGroceryList, userId } = props;
 
-    function onCreateListClick(e) {
+    function onCreateGameClick(e) {
         e.preventDefault();
         onCloseGroceryList();
     }
@@ -28,7 +28,7 @@ function EditList(props) {
                 </div>
             </div>
             <footer className="app-footer">
-                <p>Share your list with others using <a href={`/?listId=${groceryListId}`} target="_blank" rel="noopener noreferrer">this link</a> or <a href="/" onClick={onCreateListClick}>create a new grocery list</a>.</p>
+                <p>Share your list with others using <a href={`/?listId=${groceryListId}`} target="_blank" rel="noopener noreferrer">this link</a> or <a href="/" onClick={onCreateGameClick}>create a new grocery list</a>.</p>
             </footer>    
         </div>
     );

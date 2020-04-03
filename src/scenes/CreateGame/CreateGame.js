@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import './CreateList.css';
+import './CreateGame.css';
 import * as FirestoreService from '../../services/firestore';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
-function CreateList(props) {
+function CreateGame(props) {
 
     const { onCreate, userName, userId } = props;
 
@@ -13,7 +13,7 @@ function CreateList(props) {
         e.preventDefault();
         setError(null);
 
-        const gameName = document.createListForm.gameName.value;
+        const gameName = document.createGameForm.gameName.value;
 
         if (!gameName) {
             setError('game-name-required');
@@ -31,7 +31,7 @@ function CreateList(props) {
         <div>
             <div className="create-container">
                 <div>
-                    <form name="createListForm">
+                    <form name="createGameForm">
                         <p><label>Create a new Game!</label></p>
                         <p><input type="text" name="gameName" /></p>
                         <ErrorMessage errorCode={error}></ErrorMessage>
@@ -43,4 +43,4 @@ function CreateList(props) {
     );
 }
 
-export default CreateList;
+export default CreateGame;

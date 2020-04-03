@@ -20,7 +20,7 @@ export const authenticateAnonymously = () => {
 
 export const createGame = (userName, userId, gameName) => {
     console.log(userName, userId, gameName);
-    return db.collection('gameList')
+    return db.collection('games')
         .add({
             name: gameName,
             created: firebase.firestore.FieldValue.serverTimestamp(),
@@ -35,13 +35,13 @@ export const createGame = (userName, userId, gameName) => {
         });      
 };
 
-export const getGameList = () => {
-    return db.collection('gameList')
+export const getGames= () => {
+    return db.collection('games')
         .get();
 };
 
-export const getGameListSnapshot = () => {
-    return getGameList()
+export const getGamesSnapshot = () => {
+    return getGames()
         .then(querySnapshot => {
             console.log('snapshot', querySnapshot);
             return querySnapshot.docs
@@ -49,21 +49,21 @@ export const getGameListSnapshot = () => {
         
 };
 
-export const streamGameList = (observer) => {
-    return db.collection('gameList')
+export const streamGames = (observer) => {
+    return db.collection('games')
         .orderBy('created')
         .onSnapshot(observer);
 };
 
 
 export const getGame = gameId => {
-    return db.collection('gameList')
+    return db.collection('games')
         .doc(gameId)
         .get();
 };
 
 export const updateStartGame = (userId, gameId) => {
-    return db.collection('gameList')
+    return db.collection('games')
         .doc(gameId)
         .update({
             playerTurn: userId,
@@ -72,7 +72,7 @@ export const updateStartGame = (userId, gameId) => {
 };
 
 export const updatePlayerTurn = (userId, gameId) => {
-    return db.collection('gameList')
+    return db.collection('games')
         .doc(gameId)
         .update({
             playerTurn: userId
@@ -80,7 +80,7 @@ export const updatePlayerTurn = (userId, gameId) => {
 };
 
 export const addUserToGame = (userName, userId, gameId)=> {
-    return db.collection('gameList')
+    return db.collection('games')
         .doc(gameId)
         .update({
             users: firebase.firestore.FieldValue.arrayUnion({ 

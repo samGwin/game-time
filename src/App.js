@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import * as FirestoreService from './services/firestore';
 
-import CreateList from './scenes/CreateList/CreateList';
-import JoinList from './scenes/JoinList/JoinList';
+import CreateGame from './scenes/CreateGame/CreateGame';
+import JoinGame from './scenes/JoinGame/JoinGame';
 import Login from './scenes/Login/Login';
 import EditList from './scenes/EditList/EditList';
 import ErrorMessage from './components/ErrorMessage/ErrorMessage';
@@ -16,7 +16,7 @@ function App() {
   const [user, setUser] = useState();
   const [userId, setUserId] = useState();
   const [game, setGame] = useState();
-  const [gameList, setGameList] = useState();
+  const [games, setGames] = useState();
   const [error, setError] = useState();
 
   // Use a custom hook to subscribe to the grocery list ID provided as a URL query parameter
@@ -51,7 +51,7 @@ function App() {
     setUser(userName)
   }
 
-  function onCloseGameList() {
+  function onCloseGames() {
     setGameId();
     setGame();
     setUser();
@@ -79,8 +79,8 @@ function App() {
   return (
     <div>
       <ErrorMessage errorCode={error}></ErrorMessage>
-      <JoinList {...{onSelectGame, gameList, onCloseGameList, userId}}></JoinList>
-      <CreateList onCreate={onCreateGame} userName={user} userId={userId}></CreateList>
+      <JoinGame {...{onSelectGame, games, onCloseGames, userId}}></JoinGame>
+      <CreateGame onCreate={onCreateGame} userName={user} userId={userId}></CreateGame>
     </div>
   );
 }
