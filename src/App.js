@@ -25,20 +25,8 @@ function App() {
   // Use an effect to authenticate and load the grocery list from the database
   useEffect(() => {
     FirestoreService.authenticateAnonymously().then(userCredential => {
+      console.log('useEffect APP()')
       setUserId(userCredential.user.uid);
-      if (gameId) {
-        FirestoreService.getGame(gameId)
-          .then(game => {
-            if (game.exists) {
-              setError(null);
-              setGame(game.data());
-            } else {
-              setError('game-not-found');
-              setGame();
-            }
-          })
-          .catch(() => setError('game-get-fail'));
-      }
     })
     .catch(() => setError('anonymous-auth-failed'));
   }, [gameId, setGameId]);
@@ -57,8 +45,8 @@ function App() {
     setUser();
   }
 
-  function onSelectGame(gameName, userName) {
-    setUser(userName);
+  function onSelectGame(gameId) {
+    setGameId(gameId);
     FirestoreService.getGame(gameId)
       .then(updatedGame => setGame(updatedGame.data()))
       .catch(() => setError('game-get-fail'));

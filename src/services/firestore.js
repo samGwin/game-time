@@ -18,6 +18,7 @@ export const authenticateAnonymously = () => {
 
 //game code
 
+/*
 export const createGame = (userName, userId, gameName) => {
     console.log(userName, userId, gameName);
     return db.collection('games')
@@ -34,6 +35,7 @@ export const createGame = (userName, userId, gameName) => {
             start: false
         });      
 };
+*/
 
 export const getGames= () => {
     return db.collection('games')
@@ -46,7 +48,6 @@ export const getGamesSnapshot = () => {
             console.log('snapshot', querySnapshot);
             return querySnapshot.docs
         });
-        
 };
 
 export const streamGames = (observer) => {
@@ -55,13 +56,13 @@ export const streamGames = (observer) => {
         .onSnapshot(observer);
 };
 
-
 export const getGame = gameId => {
     return db.collection('games')
         .doc(gameId)
         .get();
 };
 
+/*
 export const updateStartGame = (userId, gameId) => {
     return db.collection('games')
         .doc(gameId)
@@ -89,7 +90,7 @@ export const addUserToGame = (userName, userId, gameId)=> {
             })
         });
 };
-
+*/
 
 //end game code
 

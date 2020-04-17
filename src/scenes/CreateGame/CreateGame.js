@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './CreateGame.css';
 import * as FirestoreService from '../../services/firestore';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import * as api from '../../services/apimethods';
 
 function CreateGame(props) {
 
@@ -20,11 +21,21 @@ function CreateGame(props) {
             return;
         }
 
+        api.createGame(userName, userId, gameName)
+        .then(docRef => {
+            onCreate(docRef.id);
+        })
+        .catch(reason => setError('create-list-error'));
+
+        //api.createGame(userName, userId, gameName)
+        //    .then
+        /*
         FirestoreService.createGame(userName, userId, gameName)
             .then(docRef => {
                 onCreate(docRef.id);
             })
             .catch(reason => setError('create-list-error'));
+        */
     }
 
     return (
@@ -35,7 +46,7 @@ function CreateGame(props) {
                         <p><label>Create a new Game!</label></p>
                         <p><input type="text" name="gameName" /></p>
                         <ErrorMessage errorCode={error}></ErrorMessage>
-                        <p><button onClick={createGame}>Create a new Game</button></p>
+                        <p><button onClick={createGame}>Create Game</button></p>
                     </form>
                 </div>
             </div>

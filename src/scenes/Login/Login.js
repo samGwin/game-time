@@ -19,8 +19,23 @@ function Login(props) {
             setError('user-name-required');
             return;
         }
-
+        //const id = null;
+        //validation({userName, id})
         onCreateUser(userName)
+    }
+
+    function validation(body) {
+        let error = '';
+        for (let [key, value] of Object.entries(body)) {
+            console.log('test', key, value)
+            if(!value) {
+                error = error + key + ", ";
+            }
+        }
+        if(error !== '') {
+            error = error + "properties were not sent."
+            throw new Error(error);
+        }
     }
 
     return (
