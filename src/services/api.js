@@ -23,10 +23,12 @@ export function putApi(endpoint, obj) {
         .then(json => {
             console.log('test', json)
             return json;
-        });
+        })
+        .catch(error => {throw new Error(error.message)});
 }
 
 export function postAPI(endpoint, obj) {
+    console.log('post', obj)
     return fetch(endpoint, {
         method: 'POST',
         headers: {
@@ -41,39 +43,16 @@ export function postAPI(endpoint, obj) {
             console.log('test', json)
             return json;
         })
-        .catch(error => {throw new Error(error)});
+        .catch(error => {throw new Error(error.message)});
 }
 
 function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response;
     }
-    response.json()
-        .then(json => json.error)
-        .then(error => {
-            console.log(error);
-            throw new Error(error)
+    return response.json()
+        .then(json => {
+            console.log('api error')
+            throw new Error(json.error)
         })
-
-    //const reader = response.body.text;
-    //console.log('error response', response);
-
-    /*
-    if(response.body){
-        return response.text()
-        .then(function(text){
-            if(text) {
-                console.log('error', text);
-                throw new Error(text);
-            }
-            else {
-                throw new Error(response.statusText);
-            }
-        });
-    }
-    else {
-        throw new Error(response.statusText);
-    
-    }
-    */
 }

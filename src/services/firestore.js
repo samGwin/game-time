@@ -45,7 +45,6 @@ export const getGames= () => {
 export const getGamesSnapshot = () => {
     return getGames()
         .then(querySnapshot => {
-            console.log('snapshot', querySnapshot);
             return querySnapshot.docs
         });
 };
@@ -61,6 +60,27 @@ export const getGame = gameId => {
         .doc(gameId)
         .get();
 };
+
+const gameRef = (gameId) => {
+    return db.collection('games')
+        .doc(gameId)
+}
+
+
+export const streamGame = (gameId, observer) => {
+    return gameRef(gameId)
+    .onSnapshot(observer)
+}
+
+/*
+export const streamGroceryListItems = (groceryListId, observer) => {
+    return db.collection('groceryLists')
+        .doc(groceryListId)
+        .collection('items')
+        .orderBy('created')
+        .onSnapshot(observer);
+};
+*/
 
 /*
 export const updateStartGame = (userId, gameId) => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './JoinGame.css';
-import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import CustomErrorMessage from '../../components/ErrorMessage/CustomErrorMessage';
 import * as FirestoreService from '../../services/firestore';
 import * as api from '../../services/apimethods';
 
@@ -12,7 +12,6 @@ function JoinGame(props) {
     const [ games, setGames ] = useState();
 
     useEffect(() => {
-        console.log('useEffect JOINGAME')
         FirestoreService.getGames()
             .then(querySnapshot => {
                 const updatedGames = querySnapshot.docs.map(doc => {
@@ -23,7 +22,7 @@ function JoinGame(props) {
     }, []);
     
     function getGameButtonList() {
-        const buttonList = games.map(game => <JoinButton key={game.id} gameId={game.id} label={game.name} onClick={joinGame}/>);
+        const buttonList = games.map((game, index) => <JoinButton key={index} gameId={game.id} label={game.name} onClick={joinGame}/>);
             return <div className="button-group">{buttonList}</div>;
     }
 
@@ -40,24 +39,21 @@ function JoinGame(props) {
         e.preventDefault();
         setError(null);
 
-        //console.log('e', e.target.value)
-        //console.log('e', e.target.innerText)
-        //console.log('e', e.target.key)
-        //console.log('gameId', gameId);
-        console.log('joinGame', gameId)
-        try {
-            api.addUserToGame(userName, userId, gameId)
-        } catch(error) {
-            return;
-        }
+        console.log('joinGame', gameId, userId, userName);
         
-        onSelectGame(gameId);
+        api.addUserToGame(userName, userId, gameId)
+            .then(() => onSelectGame(gameId))
+            .catch(error => {
+                setError(error.message)
+            });
+            
     }
 
     function onCreateGameClick(e) {
         e.preventDefault();
         onCloseGames();
     }
+
     if(games && games.length > 0) {
         return (
             <div>
@@ -66,7 +62,7 @@ function JoinGame(props) {
                         <form name="addUserToGameForm">
                             <p>Join a game.</p>
                             {getGameButtonList()}
-                            <ErrorMessage errorCode={error}></ErrorMessage>
+                            <CustomErrorMessage errorMessage={error}/>
                         </form>
                     </div>
                 </div>

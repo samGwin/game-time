@@ -13,8 +13,7 @@ function Login(props) {
         e.preventDefault();
         setError(null);
 
-        const userName = document.loginForm.userName.value;
-        console.log('username', userName);
+        const userName = document.loginForm.name.value;
         if (!userName) {
             setError('user-name-required');
             return;
@@ -27,7 +26,6 @@ function Login(props) {
     function validation(body) {
         let error = '';
         for (let [key, value] of Object.entries(body)) {
-            console.log('test', key, value)
             if(!value) {
                 error = error + key + ", ";
             }
@@ -47,7 +45,7 @@ function Login(props) {
                 <div>
                     <form name="loginForm">
                         <p><label>Username?</label></p>
-                        <p><input type="text" name="userName" /></p>
+                        <p><input type="text" name="name" /></p>
                         <ErrorMessage errorCode={error}></ErrorMessage>
                         <p><button onClick={createUser}>Login!</button></p>
                     </form>
